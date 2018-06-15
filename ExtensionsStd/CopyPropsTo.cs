@@ -6,7 +6,7 @@ namespace ExtensionsStd
     public static partial class CommonExtensions
     {
         /// <summary>
-        /// Copy props values from an obj to another
+        /// Copy props values from an obj to another.
         /// props must have the same name
         /// </summary>
         /// <typeparam name="T">type of source obj</typeparam>
