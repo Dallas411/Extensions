@@ -8,7 +8,7 @@ namespace ExtensionsStd
     public static partial class CommonExtensions
     {
         /// <summary>
-        /// Check the differences between the properties of two instances of the same object
+        /// Check the differences between the properties of two instances of the same class
         /// Returns the list of properties names with different values.
         /// </summary>
         /// <typeparam name="T"></typeparam>
