@@ -9,7 +9,7 @@ namespace ExtensionsStd
     {
         /// <summary>
         /// Check the differences between the properties of two instances of the same object
-        /// Returns the list of property names with different values.
+        /// Returns the list of properties names with different values.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="original"></param>
@@ -21,7 +21,7 @@ namespace ExtensionsStd
             List<string> differences = new List<string>();
             foreach (PropertyInfo pi in typeof(T).GetProperties())
             {
-                var Prop = pi.Name.ToString();
+                var prop = pi.Name.ToString();
                 var originalVal = pi.GetValue(original);
                 var modifiedVal = pi.GetValue(modified);
                 if (pi.PropertyType == typeof(string) && equalNullAndWhiteSpace)
@@ -30,7 +30,7 @@ namespace ExtensionsStd
                     if (modifiedVal == null || string.IsNullOrWhiteSpace(modifiedVal.ToString())) modifiedVal = null;
                 }
                 if ((originalVal != null && !originalVal.Equals(modifiedVal)) || (originalVal == null && modifiedVal != null))
-                    differences.Add(Prop);
+                    differences.Add(prop);
             }
             return differences;
         }
