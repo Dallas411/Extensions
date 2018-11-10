@@ -15,22 +15,26 @@ namespace ExtensionsStd
         /// <param name="original"></param>
         /// <param name="modified"></param>
         /// <param name="equalNullAndWhiteSpace">Determines whether to consider the same values ​​as nulls and spaces (only for strings)</param>
+        /// <param name="ignoreProperties">Prop not to consider</param>
         /// <returns></returns>
-        public static List<string> Differences<T>(this T original, T modified, bool equalNullAndWhiteSpace = false)
+        public static List<string> Differences<T>(this T original, T modified, bool equalNullAndWhiteSpace = false, List<string> ignoreProperties = null)
         {
             List<string> differences = new List<string>();
             foreach (PropertyInfo pi in typeof(T).GetProperties())
             {
                 var prop = pi.Name.ToString();
-                var originalVal = pi.GetValue(original);
-                var modifiedVal = pi.GetValue(modified);
-                if (pi.PropertyType == typeof(string) && equalNullAndWhiteSpace)
+                if ((ignoreProperties != null && !ignoreProperties.Contains(prop)) || ignoreProperties == null)
                 {
-                    if (originalVal == null || string.IsNullOrWhiteSpace(originalVal.ToString())) originalVal = null;
-                    if (modifiedVal == null || string.IsNullOrWhiteSpace(modifiedVal.ToString())) modifiedVal = null;
+                    var originalVal = pi.GetValue(original);
+                    var modifiedVal = pi.GetValue(modified);
+                    if (pi.PropertyType == typeof(string) && equalNullAndWhiteSpace)
+                    {
+                        if (originalVal == null || string.IsNullOrWhiteSpace(originalVal.ToString())) originalVal = null;
+                        if (modifiedVal == null || string.IsNullOrWhiteSpace(modifiedVal.ToString())) modifiedVal = null;
+                    }
+                    if ((originalVal != null && !originalVal.Equals(modifiedVal)) || (originalVal == null && modifiedVal != null))
+                        differences.Add(prop);
                 }
-                if ((originalVal != null && !originalVal.Equals(modifiedVal)) || (originalVal == null && modifiedVal != null))
-                    differences.Add(prop);
             }
             return differences;
         }
