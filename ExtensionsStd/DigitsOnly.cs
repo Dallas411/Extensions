@@ -14,7 +14,10 @@ namespace ExtensionsStd
         /// <returns></returns>
         public static string DigitsOnly(this string value)
         {
-            return new string(value?.Where(c => char.IsDigit(c)).ToArray());
+            if (value!=null)
+                return new string(value.Where(c => char.IsDigit(c)).ToArray());
+            else
+                return null;
         }
     }
 }
